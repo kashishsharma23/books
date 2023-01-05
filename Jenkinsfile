@@ -1,13 +1,14 @@
-pipeline{
-  agent any
-  tools{
-    maven 'maven_3_5_0'
-  }
-  stages{
-    stage('Build maven'){
-      steps{
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/kashishsharma23/books.git']]])
-        sh 'mvn clean install'
+pipeline {
+	agent none
+  stages {
+  	stage('Maven Install') {
+    	agent {
+      	any{
+        	image 'maven:3.5.0'
+        }
+      }
+      steps {
+      	bat 'mvn clean install'
       }
     }
   }
